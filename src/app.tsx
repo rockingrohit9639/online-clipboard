@@ -1,9 +1,5 @@
-import { Button } from '@/components/ui/button'
+import AppShell from './components/app-shell'
 
 export default function App() {
-  return (
-    <div className="flex h-screen items-center justify-center text-4xl">
-      <Button>Home</Button>
-    </div>
-  )
+  return <AppShell>u</AppShell>
 }
