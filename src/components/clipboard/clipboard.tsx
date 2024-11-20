@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 import { ClipboardIcon } from 'lucide-react'
 import SendToClipboardForm from './send-to-clipboard-form'
+import RetrieveFromClipboard from './retrieve-from-clipboard'
 
 export default function Clipboard() {
   return (
@@ -18,7 +19,7 @@ export default function Clipboard() {
           <SendToClipboardForm />
         </TabsContent>
         <TabsContent value="retrieve" className="min-h-96">
-          Change your password here.
+          <RetrieveFromClipboard />
         </TabsContent>
       </Tabs>
     </div>

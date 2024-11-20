@@ -26,5 +26,5 @@ export const createNewClip = mutation({
 })
 
 export function generateClipCode() {
-  return Math.floor(111111 + Math.random() * 999999)
+  return Math.floor(100000 + Math.random() * 999999)
 }
