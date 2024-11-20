@@ -1,0 +1,30 @@
+import { v } from 'convex/values'
+import { mutation } from './_generated/server'
+
+export const createNewClip = mutation({
+  args: { text: v.string() },
+  handler: async (ctx, args) => {
+    let code = generateClipCode()
+
+    /* I know it is not the best approach, but it does not matter for now. */
+    while (true) {
+      const existingCodeClips = await ctx.db
+        .query('clips')
+        .filter((q) => q.eq(q.field('code'), code))
+        .collect()
+
+      if (existingCodeClips.length === 0) {
+        break
+      }
+
+      code = generateClipCode()
+    }
+
+    const id = await ctx.db.insert('clips', { code, ...args })
+    return { id, code }
+  },
+})
+
+export function generateClipCode() {
+  return Math.floor(111111 + Math.random() * 999999)
+}
