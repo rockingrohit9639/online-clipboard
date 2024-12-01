@@ -1,5 +1,5 @@
 import { v } from 'convex/values'
-import { mutation, query } from './_generated/server'
+import { mutation } from './_generated/server'
 
 export const createNewClip = mutation({
   args: { text: v.string() },
@@ -25,7 +25,7 @@ export const createNewClip = mutation({
   },
 })
 
-export const getClipByCode = query({
+export const getClipByCode = mutation({
   args: { code: v.number() },
   handler: async (ctx, args) => {
     const clip = await ctx.db
