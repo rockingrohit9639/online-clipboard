@@ -8,6 +8,9 @@ import { useMutation } from '@tanstack/react-query'
 import { useConvexMutation } from '@convex-dev/react-query'
 import { api } from 'convex/_generated/api'
 import { useState } from 'react'
+import When from '../when'
+import { Input } from '../ui/input'
+import { toast } from 'sonner'
 
 export default function SendToClipboardForm() {
   const [code, setCode] = useState<number | null>(null)
@@ -31,6 +34,12 @@ export default function SendToClipboardForm() {
     createClipMutation.mutate(values)
   }
 
+  function handleCopyCode() {
+    navigator.clipboard.writeText(code?.toString() ?? '').then(() => {
+      toast.success('Code copied successfully.')
+    })
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSendToClipboard)} className="mb-4 grid gap-4">
@@ -48,10 +57,15 @@ export default function SendToClipboardForm() {
           )}
         />
 
-        <Button>Send to clipboard</Button>
+        <Button disabled={createClipMutation.isPending}>Send to clipboard</Button>
       </form>
 
-      {code ? <div className="text-center text-4xl font-bold">Your code : {code}</div> : null}
+      <When condition={!!code}>
+        <div className="flex items-center gap-4">
+          <Input disabled value={code ?? ''} />
+          <Button onClick={handleCopyCode}>Copy code</Button>
+        </div>
+      </When>
     </Form>
   )
 }
